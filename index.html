@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nama Kamu | Portofolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="Portofolio Nama Kamu: proyek, keahlian, dan pengalaman.">
+  <style>
+    :root {
+      /* Tema utama: gelap elegan, aksen emas champagne */
+      --bg: #0e1116;
+      --surface: #161a22;
+      --text: #ece8df;
+      --muted: #9a9486;
+      --border: #262b36;
+      --accent: #c9a96e;
+      --accent-soft: rgba(201, 169, 110, .14);
+      --radius: 14px;
+      --max: 1040px;
+      --serif: "Playfair Display", "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    }
+    :root[data-theme="light"] {
+      /* Tema terang: krem hangat, bukan putih polos */
+      --bg: #efe8da;
+      --surface: #f6f0e4;
+      --text: #231f18;
+      --muted: #6f6656;
+      --border: #d9cfbb;
+      --accent: #8a6a2f;
+      --accent-soft: rgba(138, 106, 47, .13);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      transition: background .25s, color .25s;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    section { padding: 88px 0; }
+    h1, h2 { font-family: var(--serif); font-weight: 600; }
+    h2 { font-size: 2.1rem; letter-spacing: -0.01em; margin-bottom: 8px; }
+    body {
+      background-image:
+        radial-gradient(900px 500px at 85% -10%, rgba(201,169,110,.10), transparent 60%),
+        radial-gradient(700px 400px at -10% 40%, rgba(120,140,200,.07), transparent 60%);
+      background-attachment: fixed;
+    }
+    .section-sub { color: var(--muted); margin-bottom: 40px; max-width: 560px; }
+
+    /* Navbar */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(12px);
+      background: color-mix(in srgb, var(--bg) 80%, transparent);
+      border-bottom: 1px solid var(--border);
+    }
+    nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo { font-weight: 700; letter-spacing: -0.02em; font-size: 1.1rem; }
+    .logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 26px; align-items: center; }
+    .nav-links a { color: var(--muted); font-size: .95rem; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .icon-btn {
+      background: none; border: 1px solid var(--border); color: var(--text);
+      width: 38px; height: 38px; border-radius: 10px; cursor: pointer; font-size: 1rem;
+    }
+    .menu-btn { display: none; }
+
+    /* Hero */
+    .hero { padding: 110px 0 90px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent-soft); color: var(--accent);
+      padding: 6px 14px; border-radius: 999px; font-size: .85rem; font-weight: 600;
+      margin-bottom: 22px;
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; }
+    .hero h1 { font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1.1; letter-spacing: -0.035em; margin-bottom: 20px; }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+    .hero p { color: var(--muted); font-size: 1.15rem; max-width: 600px; margin-bottom: 32px; }
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 12px 24px; border-radius: 12px; font-weight: 600; font-size: .95rem;
+      border: 1px solid var(--border); transition: transform .15s, box-shadow .15s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .btn-primary:hover { box-shadow: 0 8px 20px color-mix(in srgb, var(--accent) 35%, transparent); }
+
+    /* About */
+    .about-grid { display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: center; }
+    .avatar {
+      aspect-ratio: 1; border-radius: 24px; background: linear-gradient(135deg, #d8bd86, #7a6236);
+      display: grid; place-items: center; color: #0e1116; font-size: 5rem; font-weight: 600;
+      font-family: var(--serif); box-shadow: 0 20px 50px rgba(0,0,0,.35);
+    }
+    .about-text p { color: var(--muted); margin-bottom: 16px; }
+    .stats { display: flex; gap: 36px; margin-top: 24px; flex-wrap: wrap; }
+    .stat strong { display: block; font-size: 1.8rem; letter-spacing: -0.02em; }
+    .stat span { color: var(--muted); font-size: .9rem; }
+
+    /* Skills */
+    .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 9px 18px; border-radius: 999px; font-size: .92rem; font-weight: 500;
+    }
+
+    /* Projects */
+    .filters { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+    .filter {
+      background: none; border: 1px solid var(--border); color: var(--muted);
+      padding: 7px 16px; border-radius: 999px; cursor: pointer; font-size: .9rem; font-family: inherit;
+    }
+    .filter.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; display: flex; flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 14px 30px rgba(0,0,0,.08); }
+    .card-img { height: 160px; display: grid; place-items: center; font-size: 2.6rem; color: #fff; }
+    .card-body { padding: 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .card-body h3 { font-size: 1.15rem; letter-spacing: -0.01em; }
+    .card-body p { color: var(--muted); font-size: .94rem; flex: 1; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { font-size: .78rem; background: var(--accent-soft); color: var(--accent); padding: 3px 10px; border-radius: 999px; font-weight: 600; }
+    .card-links { display: flex; gap: 16px; font-size: .9rem; font-weight: 600; margin-top: 4px; }
+    .card-links a { color: var(--accent); }
+    .card-links a:hover { text-decoration: underline; }
+    .hidden { display: none; }
+
+    /* Timeline */
+    .timeline { border-left: 2px solid var(--border); padding-left: 28px; display: grid; gap: 32px; }
+    .t-item { position: relative; }
+    .t-item::before {
+      content: ""; position: absolute; left: -36px; top: 8px; width: 14px; height: 14px;
+      border-radius: 50%; background: var(--accent); border: 3px solid var(--bg);
+    }
+    .t-date { color: var(--accent); font-size: .85rem; font-weight: 600; }
+    .t-item h3 { font-size: 1.1rem; margin: 2px 0; }
+    .t-item .org { color: var(--muted); font-size: .94rem; margin-bottom: 6px; }
+    .t-item p { color: var(--muted); font-size: .94rem; }
+
+    /* Contact */
+    .contact-box {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 22px;
+      padding: 48px; display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px;
+    }
+    .contact-info p { color: var(--muted); margin-bottom: 20px; }
+    .contact-links { display: grid; gap: 10px; }
+    .contact-links a { color: var(--accent); font-weight: 600; }
+    form { display: grid; gap: 14px; }
+    input, textarea {
+      width: 100%; padding: 13px 16px; border-radius: 10px; border: 1px solid var(--border);
+      background: var(--bg); color: var(--text); font-family: inherit; font-size: .95rem;
+    }
+    input:focus, textarea:focus { outline: 2px solid var(--accent); border-color: transparent; }
+    textarea { min-height: 120px; resize: vertical; }
+
+    footer { padding: 32px 0; text-align: center; color: var(--muted); font-size: .88rem; border-top: 1px solid var(--border); }
+
+    /* Reveal animation */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s, transform .6s; }
+    .reveal.show { opacity: 1; transform: none; }
+
+    @media (max-width: 780px) {
+      section { padding: 64px 0; }
+      .about-grid, .contact-box { grid-template-columns: 1fr; }
+      .avatar { max-width: 200px; font-size: 4rem; }
+      .contact-box { padding: 28px; gap: 32px; }
+      .menu-btn { display: inline-block; }
+      .nav-links {
+        display: none; position: absolute; top: 64px; left: 0; right: 0;
+        background: var(--bg); border-bottom: 1px solid var(--border);
+        flex-direction: column; padding: 20px; gap: 18px; align-items: flex-start;
+      }
+      .nav-links.open { display: flex; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; scroll-behavior: auto !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav>
+      <a href="#home" class="logo">nama<span>.</span>kamu</a>
+      <div class="nav-links" id="navLinks">
+        <a href="#tentang">Tentang</a>
+        <a href="#skill">Skill</a>
+        <a href="#proyek">Proyek</a>
+        <a href="#pengalaman">Pengalaman</a>
+        <a href="#kontak">Kontak</a>
+        <button class="icon-btn" id="themeBtn" aria-label="Ganti tema">🌙</button>
+      </div>
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Buka menu">☰</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="badge"><span class="dot"></span> Terbuka untuk peluang baru</div>
+      <h1>Halo, aku <em>Nama Kamu</em>.<br>Aku membuat hal-hal yang berguna.</h1>
+      <p>Aku seorang [profesi kamu] yang suka mengubah ide menjadi produk nyata. Di sini kamu bisa melihat proyek, keahlian, dan perjalananku.</p>
+      <div class="btn-row">
+        <a href="#proyek" class="btn btn-primary">Lihat Proyek</a>
+        <a href="#kontak" class="btn">Hubungi Aku</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TENTANG -->
+  <section id="tentang">
+    <div class="container reveal">
+      <h2>Tentang Aku</h2>
+      <p class="section-sub">Sedikit cerita tentang siapa aku dan apa yang aku kerjakan.</p>
+      <div class="about-grid">
+        <div class="avatar">NK</div>
+        <div class="about-text">
+          <p>Ganti paragraf ini dengan cerita singkatmu. Ceritakan latar belakang, apa yang kamu sukai dari pekerjaanmu, dan apa yang membuatmu berbeda.</p>
+          <p>Di luar pekerjaan, aku suka [hobi kamu]. Aku selalu terbuka untuk kolaborasi dan belajar hal baru.</p>
+          <div class="stats">
+            <div class="stat"><strong>3+</strong><span>Tahun pengalaman</span></div>
+            <div class="stat"><strong>20+</strong><span>Proyek selesai</span></div>
+            <div class="stat"><strong>10+</strong><span>Klien &amp; kolaborator</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILL -->
+  <section id="skill">
+    <div class="container reveal">
+      <h2>Keahlian</h2>
+      <p class="section-sub">Teknologi dan alat yang biasa aku pakai.</p>
+      <div class="chips">
+        <span class="chip">HTML &amp; CSS</span>
+        <span class="chip">JavaScript</span>
+        <span class="chip">PHP / Laravel</span>
+        <span class="chip">React</span>
+        <span class="chip">MySQL</span>
+        <span class="chip">Git &amp; GitHub</span>
+        <span class="chip">Figma</span>
+        <span class="chip">Tailwind CSS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROYEK -->
+  <section id="proyek">
+    <div class="container reveal">
+      <h2>Proyek Pilihan</h2>
+      <p class="section-sub">Beberapa karya yang paling aku banggakan.</p>
+      <div class="filters">
+        <button class="filter active" data-filter="all">Semua</button>
+        <button class="filter" data-filter="web">Web</button>
+        <button class="filter" data-filter="mobile">Mobile</button>
+        <button class="filter" data-filter="desain">Desain</button>
+      </div>
+      <div class="grid">
+        <article class="card" data-cat="web">
+          <div class="card-img" style="background:linear-gradient(135deg,#1f2a44,#3b4a6b)">🛒</div>
+          <div class="card-body">
+            <h3>Toko Online UMKM</h3>
+            <p>Website e-commerce dengan keranjang belanja, pembayaran, dan dashboard admin untuk pemilik toko.</p>
+            <div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">Tailwind</span></div>
+            <div class="card-links"><a href="#" target="_blank" rel="noopener">Demo ↗</a><a href="#" target="_blank" rel="noopener">Kode ↗</a></div>
+          </div>
+        </article>
+        <article class="card" data-cat="mobile">
+          <div class="card-img" style="background:linear-gradient(135deg,#3a2a3f,#6b3f5c)">📱</div>
+          <div class="card-body">
+            <h3>Aplikasi Catatan Keuangan</h3>
+            <p>Aplikasi untuk mencatat pemasukan dan pengeluaran harian, lengkap dengan grafik bulanan.</p>
+            <div class="tags"><span class="tag">Flutter</span><span class="tag">Firebase</span></div>
+            <div class="card-links"><a href="#" target="_blank" rel="noopener">Demo ↗</a><a href="#" target="_blank" rel="noopener">Kode ↗</a></div>
+          </div>
+        </article>
+        <article class="card" data-cat="web">
+          <div class="card-img" style="background:linear-gradient(135deg,#1d3a36,#3f6b5e)">📊</div>
+          <div class="card-body">
+            <h3>Dashboard Analitik</h3>
+            <p>Dashboard interaktif untuk memantau penjualan dan performa tim secara real-time.</p>
+            <div class="tags"><span class="tag">React</span><span class="tag">Chart.js</span><span class="tag">API</span></div>
+            <div class="card-links"><a href="#" target="_blank" rel="noopener">Demo ↗</a><a href="#" target="_blank" rel="noopener">Kode ↗</a></div>
+          </div>
+        </article>
+        <article class="card" data-cat="desain">
+          <div class="card-img" style="background:linear-gradient(135deg,#5a4320,#9a7a3c)">🎨</div>
+          <div class="card-body">
+            <h3>Redesain Aplikasi Kampus</h3>
+            <p>Studi kasus UI/UX: riset pengguna, wireframe, hingga prototipe interaktif di Figma.</p>
+            <div class="tags"><span class="tag">Figma</span><span class="tag">UI/UX</span></div>
+            <div class="card-links"><a href="#" target="_blank" rel="noopener">Studi kasus ↗</a></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PENGALAMAN -->
+  <section id="pengalaman">
+    <div class="container reveal">
+      <h2>Pengalaman &amp; Pendidikan</h2>
+      <p class="section-sub">Perjalanan karier dan pendidikanku sejauh ini.</p>
+      <div class="timeline">
+        <div class="t-item">
+          <div class="t-date">2024 – Sekarang</div>
+          <h3>Web Developer</h3>
+          <div class="org">Nama Perusahaan</div>
+          <p>Mengembangkan dan merawat aplikasi web, bekerja sama dengan tim desain dan produk.</p>
+        </div>
+        <div class="t-item">
+          <div class="t-date">2023 – 2024</div>
+          <h3>Freelance Developer</h3>
+          <div class="org">Mandiri</div>
+          <p>Mengerjakan website company profile dan toko online untuk berbagai klien.</p>
+        </div>
+        <div class="t-item">
+          <div class="t-date">2019 – 2023</div>
+          <h3>S1 Teknik Informatika</h3>
+          <div class="org">Nama Universitas</div>
+          <p>Fokus pada pengembangan web dan basis data. Aktif di organisasi kemahasiswaan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAK -->
+  <section id="kontak">
+    <div class="container reveal">
+      <div class="contact-box">
+        <div class="contact-info">
+          <h2>Ayo ngobrol</h2>
+          <p>Punya proyek, pertanyaan, atau sekadar ingin menyapa? Kirim pesan dan aku akan membalas secepatnya.</p>
+          <div class="contact-links">
+            <a href="mailto:email@kamu.com">email@kamu.com</a>
+            <a href="https://github.com/usernamekamu" target="_blank" rel="noopener">GitHub ↗</a>
+            <a href="https://linkedin.com/in/usernamekamu" target="_blank" rel="noopener">LinkedIn ↗</a>
+            <a href="https://instagram.com/usernamekamu" target="_blank" rel="noopener">Instagram ↗</a>
+          </div>
+        </div>
+        <form id="contactForm">
+          <input type="text" id="name" placeholder="Nama kamu" required>
+          <input type="email" id="email" placeholder="Email kamu" required>
+          <textarea id="message" placeholder="Tulis pesanmu..." required></textarea>
+          <button type="submit" class="btn btn-primary" style="cursor:pointer;font-family:inherit">Kirim Pesan</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">© <span id="year"></span> Nama Kamu. Dibuat dengan HTML, CSS &amp; JavaScript.</div>
+</footer>
+
+<script>
+  // Ganti alamat email tujuan form di sini
+  const EMAIL_TUJUAN = "email@kamu.com";
+
+  // Tema gelap/terang (mengikuti sistem, bisa diganti manual)
+  const root = document.documentElement;
+  const themeBtn = document.getElementById("themeBtn");
+  function setTheme(t) {
+    root.setAttribute("data-theme", t);
+    themeBtn.textContent = t === "dark" ? "☀️" : "🌙";
+    try { localStorage.setItem("theme", t); } catch (e) {}
+  }
+  let saved = null;
+  try { saved = localStorage.getItem("theme"); } catch (e) {}
+  setTheme(saved || "dark");
+  themeBtn.addEventListener("click", () => {
+    setTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
+  });
+
+  // Menu mobile
+  const navLinks = document.getElementById("navLinks");
+  document.getElementById("menuBtn").addEventListener("click", () => navLinks.classList.toggle("open"));
+  navLinks.querySelectorAll("a").forEach(a => a.addEventListener("click", () => navLinks.classList.remove("open")));
+
+  // Filter proyek
+  const filters = document.querySelectorAll(".filter");
+  const cards = document.querySelectorAll(".card");
+  filters.forEach(btn => btn.addEventListener("click", () => {
+    filters.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    const f = btn.dataset.filter;
+    cards.forEach(c => c.classList.toggle("hidden", f !== "all" && c.dataset.cat !== f));
+  }));
+
+  // Animasi muncul saat scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+
+  // Form kontak: membuka aplikasi email (tanpa backend)
+  document.getElementById("contactForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const n = document.getElementById("name").value;
+    const em = document.getElementById("email").value;
+    const m = document.getElementById("message").value;
+    const subject = encodeURIComponent("Pesan dari portofolio: " + n);
+    const body = encodeURIComponent(m + "\n\n— " + n + " (" + em + ")");
+    window.location.href = "mailto:" + EMAIL_TUJUAN + "?subject=" + subject + "&body=" + body;
+  });
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
